@@ -38,7 +38,7 @@ var circaSurviveSongs = [
 ];
 
 var inquirer = require("inquirer");
-var Word = require('./Word')
+var Word = require("./Word");
 
 /**
  * takes in an array and returns an array of
@@ -61,19 +61,44 @@ var getRandomSongs = function(inputArray) {
   return fiveSongsToGuess;
 };
 
+var promptToGuessWord = function(word) {
+  inquirer.prompt([
+      {
+        message: 'Guess a letter: ',
+        name: 'letter',
+        type: 'input'
+     }
+    ])
+    .then(function(response) {
+        var letterInput = response.letter;
+        if (!word.checkWord(letterInput)) {
+            console.log("INCORRECT");
+            console.log(word.getWord());
+            promptToGuessWord(word)
+        } else {
+            console.log("CORRECT!");
+            console.log(word.getWord());
+            promptToGuessWord(word)
+        }
+        
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+};
+
 var playGame = function(wordsToGuess) {
-    var guesses = 10;
+  var guesses = 10;
 
-    for (var i = 0; i < wordsToGuess.length; i++) {
-        var word = new Word();
-        word.setWord(wordsToGuess[i]);
-    }
+    var word = new Word();
+    word.setWord(wordsToGuess[0]);
+    console.log(word.getWord())
+    promptToGuessWord(word)
 
-    inquirer
-}
+};
 
 var startGame = function() {
-    inquirer
+  inquirer
     .prompt([
       {
         message: "What song names would you like to guess?",
@@ -88,23 +113,23 @@ var startGame = function() {
     ])
     .then(function(response) {
       console.log(response);
-  
+
       if (response.band === "Anthony Green Songs") {
-          var songsToGuess = getRandomSongs(anthonyGreenSongs);
-          console.log(songsToGuess);
+        var songsToGuess = getRandomSongs(anthonyGreenSongs);
+        playGame(songsToGuess);
       } else if (response.band === "Metallica Songs") {
-          var songsToGuess = getRandomSongs(metallicaSongs);
-          console.log(songsToGuess);
+        var songsToGuess = getRandomSongs(metallicaSongs);
+        playGame(songsToGuess);
       } else if (response.band === "Circa Survive Songs") {
-          var songsToGuess = getRandomSongs(circaSurviveSongs);
-          console.log(songsToGuess);
+        var songsToGuess = getRandomSongs(circaSurviveSongs);
+        playGame(songsToGuess);
       } else {
-          console.log("there is an error")
+        console.log("there is an error");
       }
     })
     .catch(function(error) {
       console.log(error);
-    });  
-}
+    });
+};
 
 startGame();
