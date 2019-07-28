@@ -29,4 +29,18 @@ Word.prototype.getWord = function() {
   return word;
 };
 
-module.exports(Word)
+Word.prototype.checkWord = function(letter) {
+    var containsLetter = false;
+    var wordHasLetter = false;
+    for (var i = 0; i < this.letterArray.length; i++) {
+        if (this.letterArray[i] != ' ') {
+            containsLetter = this.letterArray[i].checkLetter(letter);
+        }
+        if (containsLetter) {
+            wordHasLetter = true;
+        }
+    }
+    return wordHasLetter;
+}
+
+module.exports = Word;

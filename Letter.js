@@ -12,7 +12,7 @@ Letter.prototype.getLetter = function() {
 }
 
 Letter.prototype.checkLetter = function(inputLetter) {
-    if (inputLetter === this.letter) {
+    if (inputLetter.toUpperCase() === this.letter.toUpperCase()) {
         this.isGuessed = true;
     }
     return this.isGuessed;
