@@ -62,6 +62,8 @@ var getRandomSongs = function(inputArray) {
 
 var playGame = function(wordsToGuess) {
     var guesses = 10;
+
+    inquirer
 }
 
 var startGame = function() {
