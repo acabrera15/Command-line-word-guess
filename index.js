@@ -62,39 +62,38 @@ var getRandomSongs = function(inputArray) {
 };
 
 var promptToGuessWord = function(word) {
-  inquirer.prompt([
+  inquirer
+    .prompt([
       {
-        message: 'Guess a letter: ',
-        name: 'letter',
-        type: 'input'
-     }
+        message: "Guess a letter: ",
+        name: "letter",
+        type: "input"
+      }
     ])
     .then(function(response) {
-        var letterInput = response.letter;
-        if (!word.checkWord(letterInput)) {
-            console.log("INCORRECT");
-            console.log(word.getWord());
-            promptToGuessWord(word)
-        } else {
-            console.log("CORRECT!");
-            console.log(word.getWord());
-            promptToGuessWord(word)
-        }
-        
+      var letterInput = response.letter;
+      if (!word.checkWord(letterInput)) {
+        console.log("INCORRECT");
+        console.log(word.getWord());
+        promptToGuessWord(word);
+      } else {
+        console.log("CORRECT!");
+        console.log(word.getWord());
+        promptToGuessWord(word);
+      }
     })
     .catch(function(error) {
-        console.log(error);
-    })
+      console.log(error);
+    });
 };
 
-var playGame = function(wordsToGuess) {
+var playGame = function(wordsToGuess, wordCount) {
   var guesses = 10;
 
-    var word = new Word();
-    word.setWord(wordsToGuess[0]);
-    console.log(word.getWord())
-    promptToGuessWord(word)
-
+  var word = new Word();
+  word.setWord(wordsToGuess[wordCount]);
+  console.log(word.getWord());
+  promptToGuessWord(word);
 };
 
 var startGame = function() {
@@ -116,13 +115,13 @@ var startGame = function() {
 
       if (response.band === "Anthony Green Songs") {
         var songsToGuess = getRandomSongs(anthonyGreenSongs);
-        playGame(songsToGuess);
+        playGame(songsToGuess, 0);
       } else if (response.band === "Metallica Songs") {
         var songsToGuess = getRandomSongs(metallicaSongs);
-        playGame(songsToGuess);
+        playGame(songsToGuess, 0);
       } else if (response.band === "Circa Survive Songs") {
         var songsToGuess = getRandomSongs(circaSurviveSongs);
-        playGame(songsToGuess);
+        playGame(songsToGuess, 0);
       } else {
         console.log("there is an error");
       }

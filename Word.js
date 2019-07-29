@@ -4,6 +4,9 @@ function Word() {
   this.letterArray = [];
 }
 
+/**
+ * takes in a word string and converts it into a Word type
+ */
 Word.prototype.setWord = function(inputWord) {
   for (let i = 0; i < inputWord.length; i++) {
     if (inputWord[i] === " ") {
@@ -14,6 +17,9 @@ Word.prototype.setWord = function(inputWord) {
   }
 };
 
+/**
+ * 
+ */
 Word.prototype.getWord = function() {
   var word = "";
 
