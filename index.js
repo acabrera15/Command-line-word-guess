@@ -105,11 +105,37 @@ var promptToGuessWord = function(word, guesses) {
             console.log("You have succesfully guessed the song!!!");
             wordCount++;
             guessedLetters = [];
-            playGame();
+            if (wordCount === 5) {
+              console.log("You have guessed all the song available.");
+              inquirer
+                .prompt([
+                  {
+                    message: "Would you like to play again?",
+                    name: "answer",
+                    choices: ["yes", "no"],
+                    type: "list"
+                  }
+                ])
+                .then(function(response) {
+                  if (response.answer === "yes") {
+                    wordCount = 0;
+                    startGame();
+                  } else {
+                    console.log("Enjoy the rest of your day.");
+                    return;
+                  }
+                })
+                .catch(function(err) {
+                  console.log(err);
+                });
+            } else {
+              playGame();
+            }
+
           }
         }
       } else {
-        console.log("Letter already guessed")
+        console.log("Letter already guessed");
         promptToGuessWord(word, guesses);
       }
     })
