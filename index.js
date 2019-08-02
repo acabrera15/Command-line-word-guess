@@ -90,7 +90,7 @@ var promptToGuessWord = function(word, guesses) {
         guessedLetters.push(letterInput);
 
         if (!word.checkWord(letterInput)) {
-          console.log("INCORRECT");
+          console.log("\x1b[31m", "INCORRECT");
           guesses--;
           if (guesses === 0) {
             return;
@@ -98,7 +98,7 @@ var promptToGuessWord = function(word, guesses) {
           console.log(word.getWord());
           promptToGuessWord(word, guesses);
         } else {
-          console.log("CORRECT!");
+          console.log("\x1b[34m", "CORRECT!");
           console.log(word.getWord());
           if (!word.wordGuessed) {
             promptToGuessWord(word, guesses);
