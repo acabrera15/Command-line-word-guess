@@ -39,7 +39,9 @@ var circaSurviveSongs = [
 
 var inquirer = require("inquirer");
 var Word = require("./Word");
-
+var guessedLetters = [];
+var wordCount = 0;
+var songsToGuess = [];
 /**
  * takes in an array and returns an array of
  * 5 random items from the array
@@ -61,25 +63,54 @@ var getRandomSongs = function(inputArray) {
   return fiveSongsToGuess;
 };
 
-var promptToGuessWord = function(word) {
+var promptToGuessWord = function(word, guesses) {
+  console.log();
+  console.log(`Guesses: ${guesses}`);
   inquirer
     .prompt([
       {
         message: "Guess a letter: ",
         name: "letter",
-        type: "input"
+        type: "input",
+        validate: function(input) {
+          var okay = false;
+          okay = input.length === 1;
+          if (okay) {
+            okay = input.toUpperCase() != input.toLowerCase();
+          }
+          return okay;
+        }
       }
     ])
     .then(function(response) {
       var letterInput = response.letter;
-      if (!word.checkWord(letterInput)) {
-        console.log("INCORRECT");
-        console.log(word.getWord());
-        promptToGuessWord(word);
+
+      if (!guessedLetters.includes(letterInput)) {
+        guessedLetters.push(letterInput);
+
+        if (!word.checkWord(letterInput)) {
+          console.log("INCORRECT");
+          guesses--;
+          if (guesses === 0) {
+            return;
+          }
+          console.log(word.getWord());
+          promptToGuessWord(word, guesses);
+        } else {
+          console.log("CORRECT!");
+          console.log(word.getWord());
+          if (!word.wordGuessed) {
+            promptToGuessWord(word, guesses);
+          } else {
+            console.log("You have succesfully guessed the song!!!");
+            wordCount++;
+            guessedLetters = [];
+            playGame();
+          }
+        }
       } else {
-        console.log("CORRECT!");
-        console.log(word.getWord());
-        promptToGuessWord(word);
+        console.log("Letter already guessed")
+        promptToGuessWord(word, guesses);
       }
     })
     .catch(function(error) {
@@ -87,13 +118,13 @@ var promptToGuessWord = function(word) {
     });
 };
 
-var playGame = function(wordsToGuess, wordCount) {
+var playGame = function() {
   var guesses = 10;
 
   var word = new Word();
-  word.setWord(wordsToGuess[wordCount]);
+  word.setWord(songsToGuess[wordCount]);
   console.log(word.getWord());
-  promptToGuessWord(word);
+  promptToGuessWord(word, guesses);
 };
 
 var startGame = function() {
@@ -114,14 +145,14 @@ var startGame = function() {
       console.log(response);
 
       if (response.band === "Anthony Green Songs") {
-        var songsToGuess = getRandomSongs(anthonyGreenSongs);
-        playGame(songsToGuess, 0);
+        songsToGuess = getRandomSongs(anthonyGreenSongs);
+        playGame();
       } else if (response.band === "Metallica Songs") {
-        var songsToGuess = getRandomSongs(metallicaSongs);
-        playGame(songsToGuess, 0);
+        songsToGuess = getRandomSongs(metallicaSongs);
+        playGame();
       } else if (response.band === "Circa Survive Songs") {
-        var songsToGuess = getRandomSongs(circaSurviveSongs);
-        playGame(songsToGuess, 0);
+        songsToGuess = getRandomSongs(circaSurviveSongs);
+        playGame();
       } else {
         console.log("there is an error");
       }

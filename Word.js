@@ -2,6 +2,7 @@ var Letter = require("./Letter");
 
 function Word() {
   this.letterArray = [];
+  this.wordGuessed = false;
 }
 
 /**
@@ -39,13 +40,16 @@ Word.prototype.checkWord = function(letter) {
     var containsLetter = false;
     var wordHasLetter = false;
     for (var i = 0; i < this.letterArray.length; i++) {
-        if (this.letterArray[i] != ' ') {
+        if (this.letterArray[i] !== ' ' && this.letterArray[i].isGuessed === false) {
             containsLetter = this.letterArray[i].checkLetter(letter);
         }
         if (containsLetter) {
             wordHasLetter = true;
         }
     }
+
+    this.wordGuessed = !this.getWord().includes('_');
+
     return wordHasLetter;
 }
 
