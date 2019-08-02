@@ -19,7 +19,7 @@ Word.prototype.setWord = function(inputWord) {
 };
 
 /**
- * 
+ * returns a string representation of the Word object.
  */
 Word.prototype.getWord = function() {
   var word = "";
@@ -36,6 +36,10 @@ Word.prototype.getWord = function() {
   return word;
 };
 
+/**
+ * inputs a letter and checks to see if the word contains
+ * the letter
+ */
 Word.prototype.checkWord = function(letter) {
     var containsLetter = false;
     var wordHasLetter = false;

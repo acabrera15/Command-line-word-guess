@@ -64,6 +64,11 @@ var getRandomSongs = function(inputArray) {
   return fiveSongsToGuess;
 };
 
+/**
+ * Uses inquirer to ask user to input a letter.  The letter is
+ * received and errror checked.  The function is called repeatedly
+ * until the game is finished or the user runs out of guesses.
+ */
 var promptToGuessWord = function(word, guesses) {
   console.log();
   console.log(`Guesses: ${guesses}`);
@@ -153,6 +158,11 @@ var playGame = function() {
   promptToGuessWord(word, guesses);
 };
 
+/**
+ * prompts the user to select a band/artist that they would like
+ * to guess songs from.  An array of 5 songs are created from the array
+ * of ten songs selected
+ */
 var startGame = function() {
   inquirer
     .prompt([
@@ -188,4 +198,6 @@ var startGame = function() {
     });
 };
 
+
+//begins the game
 startGame();
