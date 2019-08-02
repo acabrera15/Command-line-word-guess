@@ -1,3 +1,4 @@
+//songs to choose from
 var metallicaSongs = [
   "Enter Sandman",
   "Through the Never",
@@ -44,7 +45,7 @@ var wordCount = 0;
 var songsToGuess = [];
 /**
  * takes in an array and returns an array of
- * 5 random items from the array
+ * 5 random items from the input array
  */
 var getRandomSongs = function(inputArray) {
   var fiveSongsToGuess = [];
@@ -131,7 +132,6 @@ var promptToGuessWord = function(word, guesses) {
             } else {
               playGame();
             }
-
           }
         }
       } else {
